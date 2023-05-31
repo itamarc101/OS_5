@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
 
 // PART A:
 
@@ -200,5 +202,30 @@ void stop(AO* ao)
 
 
 // PART D:
+
+void func1(void* arg)
+{
+    int count = *(int*)arg;
+    srand(count);
+
+    for (int i = 0; i < count; i++) {
+        int number = rand() % 900000 + 100000;
+        st_queue_push(getQueue((AO*)arg), (void*)&number);
+        sleep(1);
+    }
+}
+
+void func2(void * arg)
+{
+    int number = *(int*)arg;
+    printf("Received number: %d\n", number);
+
+    // Check if the number is prim
+
+    printf("%s\n", isPrime(number) ? "true " : "false");
+    // Add 11 to the number and pass it to the next AO
+    number += 11;
+    st_queue_push(getQueue((AO*)arg), (void*)&number);
+}
 
 
