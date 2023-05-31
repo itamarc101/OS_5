@@ -228,4 +228,20 @@ void func2(void * arg)
     st_queue_push(getQueue((AO*)arg), (void*)&number);
 }
 
+void func3(void* arg)
+{
+    int number = *(int*)arg;
+    printf("Received number: %d\n", number);
+    printf("%s\n", isPrime(number) ? "true " : "false");
+    number -= 13;
+    st_queue_push(getQueue((AO*)arg), (void*)&number);
+}
 
+void func4(void* arg)
+{
+    int number = *(int*)arg;
+    printf("Received number: %d\n", number);
+    number += 2;
+    printf("Received number: %d\n", number);
+
+}
